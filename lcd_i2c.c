@@ -19,3 +19,22 @@
 // Timing constants
 #define E_PULSE  0.0005
 #define E_DELAY  0.0005
+
+int lcd_byte(int bits, int mode) {
+  // Send byte to data pins
+  // bits = the data
+  // mode = 1 for data
+  //        0 for command
+
+  bits_high = mode | (bits & 0xF0) | LCD_BACKLIGHT
+  bits_low = mode | ((bits<<4) & 0xF0) | LCD_BACKLIGHT
+
+  # High bits
+  bus.write_byte(I2C_ADDR, bits_high)
+  lcd_toggle_enable(bits_high)
+
+  # Low bits
+  bus.write_byte(I2C_ADDR, bits_low)
+  lcd_toggle_enable(bits_low)
+};
+
