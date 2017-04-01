@@ -28,9 +28,9 @@ void lcd_toggle_enable(int bits) {
 	int fd = wiringPiI2CSetup(I2C_ADDR);
 	// Toggle enable
 	Delay(E_DELAY);
-	wiringPiI2CWrite(fd, (bits | ENABLE));
+	wiringPiI2CWrite(fd, (bits |  ENABLE));
 	Delay(E_PULSE);
-	wiringPiI2CWrite(fd,(bits & ~ENABLE));
+	wiringPiI2CWrite(fd, (bits & ~ENABLE));
 	Delay(E_DELAY);
 };
 
