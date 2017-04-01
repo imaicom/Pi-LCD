@@ -25,8 +25,7 @@
 #define E_DELAY  0.5
 
 void lcd_toggle_enable(int bits) {
-	int fd;
-	fd = wiringPiI2CSetup(I2C_ADDR);
+	int fd = wiringPiI2CSetup(I2C_ADDR);
 	// Toggle enable
 	Delay(E_DELAY);
 	wiringPiI2CWrite(fd, (bits | ENABLE));
@@ -38,8 +37,7 @@ void lcd_toggle_enable(int bits) {
 void lcd_byte(int bits, int mode) {
 	int bits_high = mode | (bits & 0xF0)      | LCD_BACKLIGHT;
 	int bits_low  = mode | ((bits<<4) & 0xF0) | LCD_BACKLIGHT;
-	int fd;
-	fd = wiringPiI2CSetup(I2C_ADDR);
+	int fd = wiringPiI2CSetup(I2C_ADDR);
 	// Send byte to data pins 
 	// bits = the data
 	// mode = 1 for data
