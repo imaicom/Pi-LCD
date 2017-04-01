@@ -25,44 +25,44 @@
 #define E_DELAY  0.5
 
 void lcd_toggle_enable(int bits) {
-  int fd;
-  fd = wiringPiI2CSetup(I2C_ADDR);
-  // Toggle enable
-  Delay(E_DELAY);
-  wiringPiI2CWrite(fd, (bits | ENABLE));
-  Delay(E_PULSE);
-  wiringPiI2CWrite(fd,(bits & ~ENABLE));
-  Delay(E_DELAY);
+	int fd;
+	fd = wiringPiI2CSetup(I2C_ADDR);
+	// Toggle enable
+	Delay(E_DELAY);
+	wiringPiI2CWrite(fd, (bits | ENABLE));
+	Delay(E_PULSE);
+	wiringPiI2CWrite(fd,(bits & ~ENABLE));
+	Delay(E_DELAY);
 };
 
 void lcd_byte(int bits, int mode) {
-  int fd;
-  fd = wiringPiI2CSetup(I2C_ADDR);
-  // Send byte to data pins 
-  // bits = the data
-  // mode = 1 for data
-  //        0 for command
-  int bits_high = mode | (bits & 0xF0)      | LCD_BACKLIGHT;
-  int bits_low  = mode | ((bits<<4) & 0xF0) | LCD_BACKLIGHT;
+	int bits_high = mode | (bits & 0xF0)      | LCD_BACKLIGHT;
+	int bits_low  = mode | ((bits<<4) & 0xF0) | LCD_BACKLIGHT;
+	int fd;
+	fd = wiringPiI2CSetup(I2C_ADDR);
+	// Send byte to data pins 
+	// bits = the data
+	// mode = 1 for data
+	//        0 for command
 
-  // High bits
-  wiringPiI2CWrite(fd, bits_high);
-  lcd_toggle_enable(bits_high);
+	// High bits
+	wiringPiI2CWrite(fd, bits_high);
+	lcd_toggle_enable(bits_high);
 
-  // Low bits
-  wiringPiI2CWrite(fd, bits_low);
-  lcd_toggle_enable(bits_low);
+	// Low bits
+	wiringPiI2CWrite(fd, bits_low);
+	lcd_toggle_enable(bits_low);
 };
 
 void lcd_init() {
-  // Initialise display
-  lcd_byte(0x33,LCD_CMD); // 110011 Initialise
-  lcd_byte(0x32,LCD_CMD); // 110010 Initialise
-  lcd_byte(0x06,LCD_CMD); // 000110 Cursor move direction
-  lcd_byte(0x0C,LCD_CMD); // 001100 Display On,Cursor Off, Blink Off 
-  lcd_byte(0x28,LCD_CMD); // 101000 Data length, number of lines, font size
-  lcd_byte(0x01,LCD_CMD); // 000001 Clear display
-  Delay(E_DELAY);
+	// Initialise display
+	lcd_byte(0x33,LCD_CMD); // 110011 Initialise
+	lcd_byte(0x32,LCD_CMD); // 110010 Initialise
+	lcd_byte(0x06,LCD_CMD); // 000110 Cursor move direction
+	lcd_byte(0x0C,LCD_CMD); // 001100 Display On,Cursor Off, Blink Off 
+	lcd_byte(0x28,LCD_CMD); // 101000 Data length, number of lines, font size
+	lcd_byte(0x01,LCD_CMD); // 000001 Clear display
+	Delay(E_DELAY);
 };
 
 void main (void){
