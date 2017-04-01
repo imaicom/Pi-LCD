@@ -17,7 +17,6 @@
 #define LCD_LINE_4  0xD4 // LCD RAM address for the 4th line
 
 #define LCD_BACKLIGHT  0x08  // On
-#define LCD_BACKLIGHT  0x00  // Off
 
 #define ENABLE  0b00000100 // Enable bit
 
@@ -28,14 +27,14 @@
 int lcd_toggle_enable(int bits) {
   // Toggle enable
   Delay(E_DELAY);
-  wiringPiI2CWrite(I2C_ADDR, (bits | ENABLE))
-  Delay(E_PULSE)
+  wiringPiI2CWrite(I2C_ADDR, (bits | ENABLE));
+  Delay(E_PULSE);
   wiringPiI2CWrite(I2C_ADDR,(bits & ~ENABLE));
   Delay(E_DELAY);
 };
 
 int lcd_byte(int bits, int mode) {
-  // Send byte to data pins
+  // Send byte to data pins 
   // bits = the data
   // mode = 1 for data
   //        0 for command
@@ -44,7 +43,7 @@ int lcd_byte(int bits, int mode) {
 
   // High bits
   wiringPiI2CWrite(I2C_ADDR, bits_high);
-  lcd_toggle_enable(bits_high)
+  lcd_toggle_enable(bits_high);
 
   // Low bits
   wiringPiI2CWrite(I2C_ADDR, bits_low);
