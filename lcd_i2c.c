@@ -24,7 +24,7 @@
 #define E_PULSE  0.5
 #define E_DELAY  0.5
 
-int lcd_toggle_enable(int bits) {
+void lcd_toggle_enable(int bits) {
   // Toggle enable
   Delay(E_DELAY);
   wiringPiI2CWrite(I2C_ADDR, (bits | ENABLE));
@@ -33,7 +33,7 @@ int lcd_toggle_enable(int bits) {
   Delay(E_DELAY);
 };
 
-int lcd_byte(int bits, int mode) {
+void lcd_byte(int bits, int mode) {
   // Send byte to data pins 
   // bits = the data
   // mode = 1 for data
@@ -50,3 +50,13 @@ int lcd_byte(int bits, int mode) {
   lcd_toggle_enable(bits_low);
 };
 
+void lcd_init() {
+  // Initialise display
+  lcd_byte(0x33,LCD_CMD); // 110011 Initialise
+  lcd_byte(0x32,LCD_CMD); // 110010 Initialise
+  lcd_byte(0x06,LCD_CMD); // 000110 Cursor move direction
+  lcd_byte(0x0C,LCD_CMD); // 001100 Display On,Cursor Off, Blink Off 
+  lcd_byte(0x28,LCD_CMD); // 101000 Data length, number of lines, font size
+  lcd_byte(0x01,LCD_CMD); // 000001 Clear display
+  Delay(E_DELAY);
+};
