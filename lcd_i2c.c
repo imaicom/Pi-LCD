@@ -4,7 +4,7 @@
 #include <wiringPiI2C.h>
 
 // Define some device parameters
-#define I2C_ADDR   0x27 // I2C device address
+#define I2C_ADDR   0x3F // I2C device address
 #define LCD_WIDTH  16   // Maximum characters per line
 
 // Define some device constants
@@ -64,6 +64,6 @@ void lcd_init() {
 };
 
 void main (void){
-	
+	lcd_init();
 	
 }

@@ -1,10 +1,4 @@
 #!/usr/bin/python
-#--------------------------------------
-#    ___  ___  _ ____
-#   / _ €/ _ €(_) __/__  __ __
-#  / , _/ ___/ /€ €/ _ €/ // /
-# /_/|_/_/  /_/___/ .__/€_, /
-#                /_/   /___/
 #
 #  lcd_i2c.py
 #  LCD test script using I2C backpack.
@@ -35,7 +29,7 @@ import smbus
 import time
 
 # Define some device parameters
-I2C_ADDR  = 0x27 # I2C device address
+I2C_ADDR  = 0x3f # I2C device address
 LCD_WIDTH = 16   # Maximum characters per line
 
 # Define some device constants
