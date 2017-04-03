@@ -21,17 +21,17 @@
 #define ENABLE  0b00000100 // Enable bit
 
 // Timing constants
-#define E_PULSE  0.5
-#define E_DELAY  0.5
+#define E_PULSE  500
+#define E_DELAY  500
 
 void lcd_toggle_enable(int bits) {
 	int fd = wiringPiI2CSetup(I2C_ADDR);
 	// Toggle enable
-	Delay(E_DELAY);
+	delayMicroseconds(E_DELAY);
 	wiringPiI2CWrite(fd, (bits |  ENABLE));
-	Delay(E_PULSE);
+	delayMicroseconds(E_PULSE);
 	wiringPiI2CWrite(fd, (bits & ~ENABLE));
-	Delay(E_DELAY);
+	delayMicroseconds(E_DELAY);
 };
 
 void lcd_byte(int bits, int mode) {
@@ -60,7 +60,7 @@ void lcd_init() {
 	lcd_byte(0x0C,LCD_CMD); // 001100 Display On,Cursor Off, Blink Off 
 	lcd_byte(0x28,LCD_CMD); // 101000 Data length, number of lines, font size
 	lcd_byte(0x01,LCD_CMD); // 000001 Clear display
-	Delay(E_DELAY);
+	delayMicroseconds(E_DELAY);
 };
 
 void main (void){
